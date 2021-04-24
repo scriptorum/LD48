@@ -8,9 +8,14 @@ if attachedRock != -1
 	physics_fixture_bind(rockFixture, id);
 	physics_fixture_bind(rockFixture, attachedRock);
 	
-	var angle = -point_direction(x, y, attachedRock.x, attachedRock.y);
-	var xx = (x + attachedRock.x) / 2;
-	var yy = (y + attachedRock.y) / 2;
+	var angle = 60 * rockAngle;
+	var len = 8;
+	var xx = lengthdir_x(len, angle);
+	var yy = lengthdir_y(len, angle);
+	
+	//var angle = -point_direction(x, y, attachedRock.x, attachedRock.y);
+	//var xx = (x + attachedRock.x) / 2;
+	//var yy = (y + attachedRock.y) / 2;
 	
 	var joint = physics_joint_weld_create(id, attachedRock, xx, yy, degtorad(angle), 0, 1, false);
 	
