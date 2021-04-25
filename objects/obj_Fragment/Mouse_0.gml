@@ -1,2 +1,2 @@
-grid[# grid_x, grid_y] = -1;
+removeBlock(grid_x, grid_y);
 instance_destroy();

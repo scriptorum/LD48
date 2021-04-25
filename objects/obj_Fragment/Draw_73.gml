@@ -1,5 +1,6 @@
 if grid != -1
 {
+	global.grid = grid;
 	var groupNumber = grid[# grid_x, grid_y];
 	if !is_undefined(groupNumber)
 	{
@@ -28,5 +29,11 @@ if grid != -1
 		foo(groupNumber, 0, 1, 0, maxy, maxx, maxy);
 		foo(groupNumber, -1, 0, 0, 0, 0, maxy);
 		foo(groupNumber, 1, 0, maxx, 0, maxx, maxy);
+
+		if(isFalling)
+			draw_set_color(c_blue);
+		else draw_set_color(c_white);
+		draw_text(x, y, groupNumber);
+		draw_set_color(c_white);
 	}
 }
