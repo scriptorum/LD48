@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"scr_fallingGroups","path":"scripts/scr_fallingGroups/scr_fallingGroups.yy",},"order":1,},
     {"id":{"name":"spr_Light","path":"sprites/spr_Light/spr_Light.yy",},"order":4,},
     {"id":{"name":"spr_dust","path":"sprites/spr_dust/spr_dust.yy",},"order":3,},
     {"id":{"name":"obj_Lighting","path":"objects/obj_Lighting/obj_Lighting.yy",},"order":3,},
@@ -10,6 +11,7 @@
     {"id":{"name":"fnt_default","path":"fonts/fnt_default/fnt_default.yy",},"order":0,},
     {"id":{"name":"obj_Collidable","path":"objects/obj_Collidable/obj_Collidable.yy",},"order":4,},
     {"id":{"name":"obj_Fragment","path":"objects/obj_Fragment/obj_Fragment.yy",},"order":2,},
+    {"id":{"name":"Object6","path":"objects/Object6/Object6.yy",},"order":5,},
     {"id":{"name":"spr_glyphs","path":"sprites/spr_glyphs/spr_glyphs.yy",},"order":2,},
     {"id":{"name":"obj_PlayController","path":"objects/obj_PlayController/obj_PlayController.yy",},"order":1,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},

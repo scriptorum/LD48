@@ -23,6 +23,7 @@ switch(state) {
 		// Fall
 		direction = 270;		
 		dropSpeed = 1;
+		addToFallingGroup(origGroup, self);
 		state = BlockState.bs_falling_now;
 	break;
 	
@@ -35,7 +36,14 @@ switch(state) {
 		{
 			var row = floor(y /  TILE_SIZE) + 1;
 			if row >= GRID_HEIGHT || grid[# grid_x, row] != -1
+			{
+				var members = getFallingGroupMembers(origGroup);
+				if !is_undefined(members)
+					for(var member = 0; member < ds_list_size(members); member += 1)
+						variable_instance_set(members[|member].id, "state", BlockState.bs_landing);
 				state = BlockState.bs_landing;	
+				clearFallingGroup(origGroup);
+			}
 			else y += dropSpeed;
 		}
 		else
