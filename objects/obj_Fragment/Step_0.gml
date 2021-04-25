@@ -3,7 +3,7 @@ switch(state) {
 		state = BlockState.bs_shuddering_now;
 		origX = x;
 		origY = y;
-		alarm_set(0, 60);
+		alarm_set(0, 30);
 	break;
 	
 	case BlockState.bs_shuddering_now:
@@ -24,7 +24,7 @@ switch(state) {
 		direction = 270;		
 		dropSpeed = 1;
 		addToFallingGroup(origGroup, self);
-		state = BlockState.bs_falling_now;
+		state = BlockState.bs_falling_now;				
 	break;
 	
 	case BlockState.bs_falling_now:
@@ -42,7 +42,9 @@ switch(state) {
 					for(var member = 0; member < ds_list_size(members); member += 1)
 						variable_instance_set(members[|member].id, "state", BlockState.bs_landing);
 				state = BlockState.bs_landing;	
-				clearFallingGroup(origGroup);
+				
+				clearFallingGroup(origGroup); // Forget this group is falling
+				checkForFalling();			  // See if any openings have been created
 			}
 			else y += dropSpeed;
 		}

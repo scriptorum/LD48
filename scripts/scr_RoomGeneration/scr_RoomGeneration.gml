@@ -105,9 +105,34 @@ function removeBlock(grid_x, grid_y)
 	ds_list_destroy(groupsToCheck);
 }
 
+function checkForFalling() 
+{
+	// Get list of groups that need to be checked
+	var map = ds_map_create();
+	var xx, yy;
+	for(yy = 0; yy < GRID_HEIGHT - 1; yy += 1)
+		for(xx = 0; xx < GRID_WIDTH; xx += 1)
+		{
+			var group = grid[# xx, yy];
+			var lowerGroup = grid[# xx, yy + 1];
+			if lowerGroup == -1 && group > -1
+				map[? group] = 1;
+		}
+		
+	// Check each group
+	var groups = ds_map_keys_to_array(map);
+	for (var i = 0; i < array_length(groups); i += 1)
+		checkGroupForFalling(groups[i]);
+		
+	// Clean up
+	ds_map_destroy(map);
+}
+
 // Checks to see if the group is falling
 function checkGroupForFalling(groupNumber)
 {
+	show_debug_message("Checking group for falling:" +  string(groupNumber));
+	
 	var groupMembers = ds_list_create();	
 	var falling = true;
 	
