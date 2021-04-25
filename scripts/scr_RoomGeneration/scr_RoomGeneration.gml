@@ -130,7 +130,7 @@ function checkGroupForFalling(groupNumber)
 	if falling == true
 	{
 		for (var i = 0; i < ds_list_size(groupMembers); i += 1)			
-			variable_instance_set(groupMembers[|i].id, "isFalling", true);
+			variable_instance_set(groupMembers[|i].id, "state", BlockState.bs_shuddering);
 	}
 }
 
