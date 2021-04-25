@@ -11,18 +11,22 @@ if grid != -1
 			if nx >= 0  && nx < GRID_WIDTH && ny >= 0 && ny < GRID_HEIGHT
 				neighbor = grid[# nx, ny];
 			
-            if neighbor != groupNumber
-                draw_line(x+x1, y+y1, x+x2, y+y2);
+            if neighbor != groupNumber {
+				var col1 = $888888;
+				var col2 = $AAAAAA;
+				var hw = (x2 - x1) / 2 + x + x1;
+				var hh = (y2 - y1) / 2 + y + y1;
+                draw_line_width_colour(x+x1, y+y1, hw, hh, 1, col1, col2);
+                draw_line_width_colour(hw, hh, x+x2, y+y2, 1, col2, col1);
+			}
         }
 
 		var maxx = sprite_width;
 		var maxy = sprite_height;
 		
-		draw_set_color($88FFFFFF);
 		foo(groupNumber, 0, -1, 0, 0, maxx, 0);
 		foo(groupNumber, 0, 1, 0, maxy, maxx, maxy);
 		foo(groupNumber, -1, 0, 0, 0, 0, maxy);
 		foo(groupNumber, 1, 0, maxx, 0, maxx, maxy);
-		draw_set_color($FFFFFFFF);
 	}
 }
