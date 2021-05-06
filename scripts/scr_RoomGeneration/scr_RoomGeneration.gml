@@ -63,17 +63,21 @@ function generateRoom() {
 			groupColor[groupNumber] = make_color_hsv(random_range(20,60),random_range(64,256),random_range(64, 196));
 			groupSize[groupNumber] = 1;
 		}
+		
+		// Leave upper left alone
+		if pos[1] >= 4 || pos[0] >= 3
+		{	
+			// Create new fragment
+			grid[# pos[0], pos[1]] = groupNumber; // Note fragment's group in grid
+			var obj = instance_create_layer(pos[0] * TILE_SIZE, pos[1] * TILE_SIZE, "Instances", obj_Fragment);
+			//show_debug_message("Created obj " + string(obj.id) + " at " + string(obj.x) + "," + string(obj.y) + " in group" + string(groupNumber));
+			obj.image_blend = groupColor[groupNumber];
 	
-		// Create new fragment
-		grid[# pos[0], pos[1]] = groupNumber; // Note fragment's group in grid
-		var obj = instance_create_layer(pos[0] * TILE_SIZE, pos[1] * TILE_SIZE, "Instances", obj_Fragment);
-		//show_debug_message("Created obj " + string(obj.id) + " at " + string(obj.x) + "," + string(obj.y) + " in group" + string(groupNumber));
-		obj.image_blend = groupColor[groupNumber];
-	
-		// Store grid details so fragment can decorate itself
-		obj.grid = grid;
-		obj.grid_x = pos[0];
-		obj.grid_y = pos[1];
+			// Store grid details so fragment can decorate itself
+			obj.grid = grid;
+			obj.grid_x = pos[0];
+			obj.grid_y = pos[1];	
+		}
 	}
 }
 
