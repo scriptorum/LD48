@@ -1,2 +1,2 @@
-removeBlock(grid_x, grid_y);
+//removeBlock(grid_x, grid_y);
 instance_destroy();

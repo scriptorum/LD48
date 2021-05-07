@@ -1,4 +1,4 @@
-if grid != -1
+/*if grid != -1
 {
 	global.grid = grid;
 	var groupNumber = grid[# grid_x, grid_y];
@@ -30,7 +30,7 @@ if grid != -1
 		foo(groupNumber, -1, 0, 0, 0, 0, maxy);
 		foo(groupNumber, 1, 0, maxx, 0, maxx, maxy);
 		
-		/*var bsColor= c_white;
+		var bsColor= c_white;
 		switch(state)
 		{
 			case BlockState.bs_shuddering: bsColor = c_navy; break;
@@ -42,6 +42,7 @@ if grid != -1
 
 		draw_set_color(bsColor);
 		draw_text(x, y, groupNumber);
-		draw_set_color(c_white);*/
+		draw_set_color(c_white);
 	}
 }
+*/

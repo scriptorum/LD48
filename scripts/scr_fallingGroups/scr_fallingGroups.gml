@@ -1,3 +1,4 @@
+/*
 global.fallingGroups = ds_map_create();
 
 function addToFallingGroup(_group, _instance)
@@ -26,6 +27,7 @@ function getFallingGroupMembers(_group)
 	return global.fallingGroups[? _group];
 }
 
+*/
 
 
 //GroupBlock = function(_groupNumber) constructor
