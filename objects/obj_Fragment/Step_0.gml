@@ -1,4 +1,16 @@
+// Update speed
+//speed = max(speed < 1 ? 1 : speed * 1.1, TILE_HEIGHT);
+
+/*
+
 switch(state) {
+	case BlockState.bs_static:
+		if place_meeting(x, y + TILE_HEIGHT / 2, obj_Collidable)
+			return;
+		
+		
+	break;
+	
 	case BlockState.bs_shuddering:
 		state = BlockState.bs_shuddering_now;
 		origX = x;
@@ -69,4 +81,4 @@ switch(state) {
 		state = BlockState.bs_static;
 	break;
 	
-}
+}*/

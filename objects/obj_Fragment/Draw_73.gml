@@ -29,20 +29,21 @@
 		foo(groupNumber, 0, 1, 0, maxy, maxx, maxy);
 		foo(groupNumber, -1, 0, 0, 0, 0, maxy);
 		foo(groupNumber, 1, 0, maxx, 0, maxx, maxy);
-		
-		var bsColor= c_white;
-		switch(state)
-		{
-			case BlockState.bs_shuddering: bsColor = c_navy; break;
-			case BlockState.bs_shuddering_now: bsColor = c_blue; break;
-			case BlockState.bs_falling: bsColor = c_maroon; break;
-			case BlockState.bs_falling_now: bsColor = c_red; break;
-			case BlockState.bs_landing: bsColor = c_yellow; break;
-		}
-
-		draw_set_color(bsColor);
-		draw_text(x, y, groupNumber);
-		draw_set_color(c_white);
 	}
 }
 */
+
+
+var bsColor= c_white;
+switch(state)
+{
+	case BlockState.bs_shuddering: bsColor = c_navy; break;
+	case BlockState.bs_shuddering_now: bsColor = c_blue; break;
+	case BlockState.bs_falling: bsColor = c_maroon; break;
+	case BlockState.bs_falling_now: bsColor = c_red; break;
+	case BlockState.bs_landing: bsColor = c_yellow; break;
+}
+
+draw_set_color(bsColor);
+draw_text(x, y, ds_list_size(group.members));
+draw_set_color(c_white);

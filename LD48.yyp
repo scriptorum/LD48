@@ -15,6 +15,7 @@
     {"id":{"name":"obj_Pilgram","path":"objects/obj_Pilgram/obj_Pilgram.yy",},"order":5,},
     {"id":{"name":"spr_glyphs","path":"sprites/spr_glyphs/spr_glyphs.yy",},"order":2,},
     {"id":{"name":"obj_PlayController","path":"objects/obj_PlayController/obj_PlayController.yy",},"order":1,},
+    {"id":{"name":"obj_RockBlock","path":"objects/obj_RockBlock/obj_RockBlock.yy",},"order":6,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
   ],
   "Options": [
