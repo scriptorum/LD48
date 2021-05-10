@@ -48,7 +48,8 @@ function joinNeighbors(list)
 			var otherInsta = instance_position(insta.x + global.neighbors[|i][0], insta.y + global.neighbors[|i][1], obj_Fragment);
 			if(otherInsta != noone) {
 				var otherGroup = variable_instance_get(otherInsta, "group");
-				if(otherGroup != noone && ds_list_size(otherGroup.members) < MAX_GROUP_SIZE)
+				var otherMembers = variable_instance_get(otherGroup, "members");
+				if(otherGroup != noone && ds_list_size(otherMembers) < MAX_GROUP_SIZE)
 				{					
 					group = otherGroup; // Will join neighboring group
 					break;	
@@ -59,16 +60,16 @@ function joinNeighbors(list)
 		// Didn't join neighbor, so will start new group
 		if(group == noone) 
 		{
-			group = {
-				color: make_color_hsv(random_range(20,60),random_range(64,256),random_range(64, 196)),
-				members: ds_list_create()
-			};
+			group = instance_create_layer(insta.x, insta.y, "Instances", obj_RockBlock);
+			variable_instance_set(group, "color", make_color_hsv(random_range(20,60),random_range(64,256),random_range(64, 196)));
+			variable_instance_set(group, "members", ds_list_create());
 		}		
 		
 		// Join group
+		var members = variable_instance_get(group, "members");
+		ds_list_add(members, insta);
 		variable_instance_set(insta, "group", group);
-		ds_list_add(group.members, insta);
-		insta.image_blend = group.color;
+		insta.image_blend = variable_instance_get(group, "color");
 	}
 }
 
@@ -76,23 +77,28 @@ function removeFragment(obj)
 {
 	// Remove fragment from world and group
 	var mainGroup = variable_instance_get(obj, "group");
-	ds_list_delete(mainGroup.members, ds_list_find_index(mainGroup.members, obj.id));
+	var mainMembers = variable_instance_get(mainGroup, "members");
+	ds_list_delete(mainMembers, ds_list_find_index(mainMembers, obj.id));
 	instance_destroy(obj);
 
 	// Give remaining fragments a unique group id
 	var groupIds = ds_list_create();
-	for(var i = 0; i < ds_list_size(mainGroup.members); i++)
+	var groupInstances = ds_list_create();
+	for(var i = 0; i < ds_list_size(mainMembers); i++) 
+	{
 		groupIds[|i] = i;
+		groupInstances[|i] = noone;
+	}
 				
 	// Compare each fragment to each other -- if neighbors, then share lower group id
-	for(var i1 = 0; i1 < ds_list_size(mainGroup.members) - 1; i1++)
-	for(var i2 = i1 + 1; i2 < ds_list_size(mainGroup.members); i2++)
+	for(var i1 = 0; i1 < ds_list_size(mainMembers) - 1; i1++)
+	for(var i2 = i1 + 1; i2 < ds_list_size(mainMembers); i2++)
 	{
 		if(i1 == i2) continue;
 		if(groupIds[|i1] == groupIds[|i2]) continue;
 		
-		var insta1 = mainGroup.members[|i1];
-		var insta2 = mainGroup.members[|i2];
+		var insta1 = mainMembers[|i1];
+		var insta2 = mainMembers[|i2];
 		
 		var dist = point_distance(insta1.x, insta1.y, insta2.x, insta2.y);
 		if(abs(dist - TILE_SIZE) < 1)
@@ -103,28 +109,29 @@ function removeFragment(obj)
 		}
 	}	
 	
-	// Give each fragment a group matching their group id
-	for(var i = 0; i < ds_list_size(mainGroup.members); i++)
+	// Give each fragment a group matching their group id	
+	for(var i = 0; i < ds_list_size(mainMembers); i++)
 	{
-		var insta1 = mainGroup.members[|i];
-		var group = groupIds[|groupIds[|i]];
+		var insta1 = mainMembers[|i];
+		var group = groupIds[|i];
+		var groupInstance = groupInstances[|group];
 		
-		if(!is_struct(group))
+		if(groupInstance == noone)
 		{
-			group = {
-				color: mainGroup.color,
-				members: ds_list_create()
-			};		
+			groupInstance = instance_create_layer(insta1.x, insta1.y, "Instances", obj_RockBlock);
+			variable_instance_set(groupInstance, "color", variable_instance_get(mainGroup, "color"));
+			variable_instance_set(groupInstance, "members", ds_list_create());
 		}
 		
-		groupIds[|i] = group;
-		ds_list_add(group.members, insta1);
-		variable_instance_set(insta1, "group", group);
+		groupInstances[|i] = groupInstance;
+		ds_list_add(variable_instance_get(groupInstance, "members"), insta1);
+		variable_instance_set(insta1, "group", groupInstance);
 	}
 	
 	// Delete unused data
+	ds_list_destroy(groupInstances)	
 	ds_list_destroy(groupIds)	
-	ds_list_destroy(mainGroup.members)	
+	ds_list_destroy(mainMembers)	
 	delete mainGroup;
 }
 

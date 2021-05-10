@@ -1,6 +1,5 @@
 {
   "resources": [
-    {"id":{"name":"scr_fallingGroups","path":"scripts/scr_fallingGroups/scr_fallingGroups.yy",},"order":1,},
     {"id":{"name":"spr_Light","path":"sprites/spr_Light/spr_Light.yy",},"order":4,},
     {"id":{"name":"spr_dust","path":"sprites/spr_dust/spr_dust.yy",},"order":3,},
     {"id":{"name":"obj_Lighting","path":"objects/obj_Lighting/obj_Lighting.yy",},"order":3,},

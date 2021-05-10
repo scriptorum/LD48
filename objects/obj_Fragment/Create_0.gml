@@ -1,5 +1,5 @@
 drawLight = false;
-dropSpeed = 0;
+/*dropSpeed = 0;
 origX = 0;
 origY = 0;
 origGroup = -1;
@@ -11,4 +11,4 @@ enum BlockState {
 	bs_falling,
 	bs_falling_now,
 	bs_landing
-}
+}*/
