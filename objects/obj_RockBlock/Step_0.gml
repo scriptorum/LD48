@@ -1,9 +1,8 @@
 #macro SHUDDER_SECONDS 1
-#macro ADJACENT_DIST 2 // Should be larger than JITTER_EXTENT
 #macro JITTER_EXTENT 1 
-
-if(!instance_exists(self))
- var xasda = 10;
+#macro MIN_SPEED 1
+#macro MAX_SPEED TILE_SIZE -1
+#macro BLOCK_ACCELERATION 1.9
 
 switch(state) {
 	
@@ -15,7 +14,7 @@ switch(state) {
 		if(!instance_exists(fragment))
 			continue;
 		with(fragment) {
-			var target = instance_place(x, y + ADJACENT_DIST, obj_Collidable);
+			var target = instance_place(x, y + MAX_SPEED, obj_Collidable);
 			if(target == noone || target == self)
 				lastVote = "v";	 // Rock falling
 			else 
@@ -53,7 +52,8 @@ switch(state) {
 	}
 
 	// Accelerate drop speed and check for collision
-	dropSpeed = min(dropSpeed < 1 ? 1 : dropSpeed * 1.1, TILE_SIZE);
+	dropSpeed *= BLOCK_ACCELERATION;
+	dropSpeed = min(dropSpeed < MIN_SPEED ? MIN_SPEED : dropSpeed, MAX_SPEED);
 	for (var i = 0; i < ds_list_size(members); ++i) {
 		var fragment = members[|i];
 		if(!instance_exists(fragment))
@@ -66,8 +66,7 @@ switch(state) {
 		}			
 	}
 	
-	// If going very slowly, come to stop
-	if(dropSpeed < 1.0) dropSpeed = 0;
+	// Update all speeds of fragments making up this rock group
 	for (var i = 0; i < ds_list_size(members); ++i) {
 		var fragment = members[|i];
 		if(!instance_exists(fragment))
@@ -75,15 +74,26 @@ switch(state) {
 		else fragment.vspeed = dropSpeed;
 	}
 	
-	// If stopped, switch to land state
-	if(dropSpeed == 0)
+	// If going very slowly, come to stop
+	if(dropSpeed < MIN_SPEED) {
+		dropSpeed = 0;
 		changeState(BlockState.bs_landing);
+	}
 	break;
 	#endregion
 	
 	#region ************ bs_landing ***********************************************************************
 	case BlockState.bs_landing:
 	dropSpeed = 0;
+	
+	// Zero out all speeds of fragments making up this rock group
+	for (var i = 0; i < ds_list_size(members); ++i) {
+		var fragment = members[|i];
+		if(!instance_exists(fragment))
+			continue;
+		else fragment.vspeed = 0;
+	}
+	
 	show_debug_message("Boom");
 	changeState(BlockState.bs_static);
 	break;
