@@ -19,7 +19,11 @@ function generateRoom()
 	for(yy = 0; yy < GRID_HEIGHT; yy += 1)
 		for(xx = 0; xx < GRID_WIDTH; xx += 1)
 			if(xx > 3 || yy > 3) // Skip upper left corner
+			{
+//				if(xx == 0 && yy = GRID_HEIGHT - 1)
+//					continue;
 				ds_list_add(list, instance_create_layer(xx * TILE_SIZE, yy * TILE_SIZE, "Instances", obj_Fragment));
+			}
 	ds_list_shuffle(list);
 	
 	// Join neighboring objects
@@ -75,11 +79,13 @@ function joinNeighbors(list)
 
 function removeFragment(obj) 
 {
+	show_debug_message("Running remove fragment on " + string(obj.id));
+
 	// Remove fragment from world and group
 	var mainGroup = variable_instance_get(obj, "group");
-	var mainMembers = variable_instance_get(mainGroup, "members");
+	var color = mainGroup.color;
+	var mainMembers = mainGroup.members;
 	ds_list_delete(mainMembers, ds_list_find_index(mainMembers, obj.id));
-	instance_destroy(obj);
 
 	// Give remaining fragments a unique group id
 	var groupIds = ds_list_create();
@@ -113,26 +119,27 @@ function removeFragment(obj)
 	for(var i = 0; i < ds_list_size(mainMembers); i++)
 	{
 		var insta1 = mainMembers[|i];
-		var group = groupIds[|i];
-		var groupInstance = groupInstances[|group];
+		var groupId = groupIds[|i];
+		var groupInstance = groupInstances[|groupId];
 		
 		if(groupInstance == noone)
 		{
 			groupInstance = instance_create_layer(insta1.x, insta1.y, "Instances", obj_RockBlock);
-			variable_instance_set(groupInstance, "color", variable_instance_get(mainGroup, "color"));
+			variable_instance_set(groupInstance, "color", mainGroup.color);
 			variable_instance_set(groupInstance, "members", ds_list_create());
 		}
 		
-		groupInstances[|i] = groupInstance;
-		ds_list_add(variable_instance_get(groupInstance, "members"), insta1);
+		groupInstances[|groupId] = groupInstance;
+		ds_list_add(groupInstance.members, insta1);
 		variable_instance_set(insta1, "group", groupInstance);
 	}
 	
 	// Delete unused data
 	ds_list_destroy(groupInstances)	
 	ds_list_destroy(groupIds)	
-	ds_list_destroy(mainMembers)	
-	delete mainGroup;
+	ds_list_destroy(mainMembers);
+	instance_destroy(mainGroup);
+	instance_destroy(obj); // destroy rockblock group
 }
 
 

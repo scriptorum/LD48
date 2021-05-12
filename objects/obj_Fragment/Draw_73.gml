@@ -1,3 +1,10 @@
+// TODO I fixed the falling/shuddering issues by putting a tolerance buffer on the rock collision masks,
+// but this has the side effect of causing room generation to fail. Probably because the anchor
+// point is upper left, which is technically outside the collision mask. Another solution would be to 
+// do shuddering without affecting x / y ... maybe that's overriding the draw event so it appears to shake 
+// but actually stays perfectly in the grid? That's probably the solution!			
+
+
 /*if grid != -1
 {
 	global.grid = grid;
@@ -36,6 +43,8 @@
 
 
 var bsColor= c_white;
+var fragText = "";
+
 //switch(state)
 //{
 //	case BlockState.bs_shuddering: bsColor = c_navy; break;
@@ -43,9 +52,27 @@ var bsColor= c_white;
 //	case BlockState.bs_falling: bsColor = c_maroon; break;
 //	case BlockState.bs_falling_now: bsColor = c_red; break;
 //	case BlockState.bs_landing: bsColor = c_yellow; break;
-//}
+//}	
+
+switch(debugDisplay) 
+{
+	case 1: // Group id
+	bsColor = c_white;
+	fragText = string(group.id % 100);
+	break;
+	
+	case 2: // Group size
+	bsColor = c_teal;
+	fragText = ds_list_size(group.members);
+	break;
+	
+	case 3: // Group fall votes
+	bsColor = make_color_hsv(group.state * 25, 255, 255);
+	fragText = lastVote;
+	break;
+}
 
 draw_set_color(bsColor);
-//draw_text(x, y, ds_list_size(group.members));
-draw_text(x, y, string(group.id % 100));
+draw_text(x, y, fragText);
 draw_set_color(c_white);
+

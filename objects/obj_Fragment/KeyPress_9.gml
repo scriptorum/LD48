@@ -1,0 +1,1 @@
+debugDisplay = (debugDisplay + 1) % 4;
