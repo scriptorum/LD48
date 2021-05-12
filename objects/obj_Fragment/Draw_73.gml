@@ -1,10 +1,3 @@
-// TODO I fixed the falling/shuddering issues by putting a tolerance buffer on the rock collision masks,
-// but this has the side effect of causing room generation to fail. Probably because the anchor
-// point is upper left, which is technically outside the collision mask. Another solution would be to 
-// do shuddering without affecting x / y ... maybe that's overriding the draw event so it appears to shake 
-// but actually stays perfectly in the grid? That's probably the solution!			
-
-
 /*if grid != -1
 {
 	global.grid = grid;

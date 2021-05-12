@@ -39,17 +39,8 @@ switch(state) {
 	
 	#region ************ bs_shuddering ********************************************************************
 	case BlockState.bs_shuddering:
-	var correctX = -shudderOffsetX;
-	var correctY = -shudderOffsetY;
-	shudderOffsetX = random_range(-JITTER_EXTENT, JITTER_EXTENT);
-	shudderOffsetY = random_range(-JITTER_EXTENT, JITTER_EXTENT);
-	for (var i = 0; i < ds_list_size(members); ++i) {
-		var fragment = members[|i];
-		if(!instance_exists(fragment))
-			continue;
-		fragment.x += correctX + shudderOffsetX;
-		fragment.y += correctY + shudderOffsetY;
-	}
+	shudderX = random_range(-JITTER_EXTENT, JITTER_EXTENT);
+	shudderY = random_range(-JITTER_EXTENT, JITTER_EXTENT);
 	break;
 	#endregion
 		
@@ -57,13 +48,8 @@ switch(state) {
 	case BlockState.bs_falling:
 	//If coming from shuddering, stop shuddering now
 	if(lastState == BlockState.bs_shuddering) {
-		for (var i = 0; i < ds_list_size(members); ++i) {
-			var fragment = members[|i];
-			if(!instance_exists(fragment))
-				continue;
-			fragment.x += -shudderOffsetX;
-			fragment.y += -shudderOffsetY;
-		}
+		shudderX = 0;
+		shudderY = 0;
 	}
 
 	// Accelerate drop speed and check for collision

@@ -1,5 +1,3 @@
-shudderOffsetX = 0;
-shudderOffsetY = 0;
 dropSpeed = 0;
 lastState = -1;
 
