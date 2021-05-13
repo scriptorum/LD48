@@ -1,8 +1,3 @@
-#macro SHUDDER_SECONDS 1
-#macro JITTER_EXTENT 1 
-#macro MIN_SPEED 1
-#macro MAX_SPEED TILE_SIZE -1
-#macro BLOCK_ACCELERATION 1.9
 
 switch(state) {
 	

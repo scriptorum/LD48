@@ -1,7 +1,3 @@
-#macro MAX_GROUP_SIZE 10
-#macro GRID_WIDTH 20
-#macro GRID_HEIGHT 16
-#macro TILE_SIZE 16
 
 // Create neighbor shorthands
 global.neighbors = ds_list_create();
