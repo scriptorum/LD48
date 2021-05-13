@@ -11,8 +11,6 @@ switch(state) {
 	var isFalling = true;
 	for (var i = 0; i < ds_list_size(members); ++i) {
 		var fragment = members[|i];
-		if(!instance_exists(fragment))
-			continue;
 		with(fragment) {
 			var target = instance_place(x, y + MAX_SPEED, obj_Collidable);
 			if(target == noone || target == self)
@@ -52,48 +50,35 @@ switch(state) {
 	}
 
 	// Accelerate drop speed and check for collision
+	// PROBLEM: The bounding box variables are integers, so the actual difference in position
+	// between the fragment and the collider is greater than the distance measured
 	dropSpeed *= BLOCK_ACCELERATION;
 	dropSpeed = min(dropSpeed < MIN_SPEED ? MIN_SPEED : dropSpeed, MAX_SPEED);
 	for (var i = 0; i < ds_list_size(members); ++i) {
 		var fragment = members[|i];
-		if(!instance_exists(fragment))
-			continue;
 		with(fragment)
 		{
 			var collider = instance_place(x, y + other.dropSpeed, obj_Collidable);			
-			if(collider != noone)
-				other.dropSpeed = min(other.dropSpeed, collider.bbox_top - bbox_bottom);
+			if(collider != noone && collider.group != group)
+				other.dropSpeed = min(other.dropSpeed, distance_to_object(collider) - 1);
 		}			
 	}
 	
 	// Update all speeds of fragments making up this rock group
 	for (var i = 0; i < ds_list_size(members); ++i) {
 		var fragment = members[|i];
-		if(!instance_exists(fragment))
-			continue;
-		else fragment.vspeed = dropSpeed;
+		fragment.y = round(fragment.y + dropSpeed);
 	}
 	
 	// If going very slowly, come to stop
-	if(dropSpeed < MIN_SPEED) {
-		dropSpeed = 0;
+	if(dropSpeed < MIN_SPEED)
 		changeState(BlockState.bs_landing);
-	}
 	break;
 	#endregion
 	
 	#region ************ bs_landing ***********************************************************************
-	case BlockState.bs_landing:
-	dropSpeed = 0;
-	
-	// Zero out all speeds of fragments making up this rock group
-	for (var i = 0; i < ds_list_size(members); ++i) {
-		var fragment = members[|i];
-		if(!instance_exists(fragment))
-			continue;
-		else fragment.vspeed = 0;
-	}
-	
+	case BlockState.bs_landing:	
+	dropSpeed = 0;	
 	show_debug_message("Boom");
 	changeState(BlockState.bs_static);
 	break;

@@ -30,7 +30,9 @@
   ],
   "eventList": [],
   "properties": [],
-  "overriddenProperties": [],
+  "overriddenProperties": [
+    {"propertyId":{"name":"group","path":"objects/obj_Collidable/obj_Collidable.yy",},"objectId":{"name":"obj_Collidable","path":"objects/obj_Collidable/obj_Collidable.yy",},"value":"self","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
+  ],
   "parent": {
     "name": "Objects",
     "path": "folders/Objects.yy",
