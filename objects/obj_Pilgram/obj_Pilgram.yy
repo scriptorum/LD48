@@ -1,7 +1,7 @@
 {
   "spriteId": {
-    "name": "spr_pilgram1",
-    "path": "sprites/spr_pilgram1/spr_pilgram1.yy",
+    "name": "sprPilgrimIdle",
+    "path": "sprites/sprPilgrimIdle/sprPilgrimIdle.yy",
   },
   "solid": false,
   "visible": true,

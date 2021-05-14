@@ -12,48 +12,34 @@ var ground = collision_line(x, y, x, y + TILE_SIZE, obj_Collidable, false, true)
 if(ground == noone)
 	fallDist = TILE_SIZE;
 else
-	fallDist = distance_to_object(ground) - vfloat;
+	fallDist = distance_to_object(ground) - 1 - vfloat;
 
-show_debug_message("FallDist:" + string(fallDist));
+
+if(fallDist == 0) {
+	switch(sprite_index) {
+		case sprPilgrimIdle:
+			if(irandom(CHANCE_FIDGET) == 0) {
+				sprite_index = sprPilgrimFidget;
+			}
+		break;
+		
+		case sprPilgrimFidget:
+			if(image_index > image_number - 1) {
+				sprite_index = sprPilgrimIdle;
+			}
+		break;
+	}
+}
 
 
 // Nope
-if(fallDist < vfloat + MIN_FALL_DIST) {
+if(abs(fallDist) < MIN_FALL_DIST) {
 	vspeed = 0;
-	y = round(y);
+	y = round(y + fallDist);
 	return;
-}
-	
-	
+}	
 
 if(vspeed < MIN_FALL_DIST) vspeed = MIN_FALL_DIST;
 else vspeed = min(fallDist - 1, vspeed * BLOCK_ACCELERATION);
 
 
-// Yep
-
-
-/*
-
-
-
-		
-	{
-	if(sprite_index != spr_PilgramBigFall)
-		sprite_index = spr_PilgramBigFall;			
-}
-else {
-	// Maybe falling, check distance to ground
-	var fallDist = distance_to_object(ground) - vfloat;
-	if(fallDist > BIG_FALL_DIST) {
-		if(sprite_index != spr_PilgramBigFall)
-			sprite_index = spr_PilgramBigFall;			
-	}		
-	else {
-		if(fallDist >= MIN_FALL_DIST) {
-			if(sprite_index != spr_PilgramSmallFall)
-				sprite_index = spr_PilgramBigFall;			
-		}
-	}
-}	
-*/
