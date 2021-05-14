@@ -14,7 +14,7 @@ function generateRoom()
 	var xx, yy;
 	for(yy = 0; yy < GRID_HEIGHT; yy += 1)
 		for(xx = 0; xx < GRID_WIDTH; xx += 1)
-			if(xx > 3 || yy > 3) // Skip upper left corner
+			if(xx > 7 || yy > 5) // Skip upper left corner
 			{
 //				if(xx == 0 && yy = GRID_HEIGHT - 1)
 //					continue;
@@ -79,7 +79,6 @@ function removeFragment(obj)
 
 	// Remove fragment from world and group
 	var mainGroup = variable_instance_get(obj, "group");
-	var color = mainGroup.color;
 	var mainMembers = mainGroup.members;
 	ds_list_delete(mainMembers, ds_list_find_index(mainMembers, obj.id));
 

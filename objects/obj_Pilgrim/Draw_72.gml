@@ -4,7 +4,7 @@ var addLight = function(color)
 {
 	var jitterX = random_range(-HALF_JITTER, HALF_JITTER);
 	var jitterY = random_range(-HALF_JITTER, HALF_JITTER);
-	var scaler = random_range(0.22, .28);
+	var scaler = random_range(0.44, .56);
 	draw_sprite_ext(spr_Light, 0, x + sprite_width *.2 + jitterX, 
 		y - sprite_height * .8 + jitterY, scaler, scaler, 0, color, 0.5);
 };

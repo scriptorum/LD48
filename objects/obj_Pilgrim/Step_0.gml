@@ -10,7 +10,7 @@ if(dragging) {
 var fallDist = 0;
 var ground = collision_line(x, y, x, y + TILE_SIZE, obj_Collidable, false, true);
 if(ground == noone)
-	fallDist = TILE_SIZE;
+	fallDist = MAX_SPEED;
 else
 	fallDist = distance_to_object(ground) - 1 - vfloat;
 
